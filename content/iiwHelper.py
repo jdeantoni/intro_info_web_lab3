@@ -4,18 +4,47 @@ from PIL import Image
 import os
 
 from dataclasses import dataclass
+
 @dataclass
 class Pixel:
     r : int
     g : int
     b : int
 
+    # Permet de vérifier que les valeurs R,G,B sont valides.
+    # La fonction __init__ est appelée lors de la création du pixel.
+    def __init__(self,r,g,b):
+        if type(r) != int or type(g) != int or type(b) != int:
+            raise TypeError('Colors componants (r,g,b) must be integer')
+        if max([r,g,b]) > 255 or min([r,g,b]) < 0:
+            raise ValueError('Colors componants (r,g,b) must be between 0 and 255')
+        self.r = r
+        self.g = g
+        self.b = b
+
+
 @dataclass
 class ImagePPM:
     width:int
     height:int
     pixels:list[Pixel]
+    
+    # Permet de vérifier que les valeurs width et height sont bien valides
+    # La fonction __init__ est appelée lors de la création de l’image.
+    def __init__(self,width,height,pixels):
+        if width * height != len(pixels):
+            raise ValueError("Dimensions values does not match length of pixels list")
+        self.width = width
+        self.height = height
+        self.pixels = pixels
+    
 
+p1 = Pixel(0,0,0)
+p2 = Pixel(255,255,255)
+p3 = Pixel(0,0,0)
+p4 = Pixel(255,255,255)
+
+img = ImagePPM(2,3,[p1,p2,p3,p4])
 
 def showImageFromPath(path):
     img = cv2.imread(path)
