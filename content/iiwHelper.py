@@ -39,13 +39,6 @@ class ImagePPM:
         self.pixels = pixels
     
 
-p1 = Pixel(0,0,0)
-p2 = Pixel(255,255,255)
-p3 = Pixel(0,0,0)
-p4 = Pixel(255,255,255)
-
-img = ImagePPM(2,3,[p1,p2,p3,p4])
-
 def showImageFromPath(path):
     img = cv2.imread(path)
     # Remember, opencv by default reads images in BGR rather than RGB
